@@ -9,21 +9,22 @@ type Props = {
     todolist: TodolistDomainType;
 }
 export const TodolistTitle = ({todolist}: Props) => {
+    const {id, title, entityStatus} = todolist
     const {removeTodolist, changeTodolistTitle} = useActions(todolistsThunks)
     const removeTodolistHandler = () => {
-        removeTodolist(todolist.id);
+        removeTodolist(id);
     };
 
     const changeTodolistTitleHandler = useCallback(
         (title: string) => {
-            changeTodolistTitle({id: todolist.id, title});
+            changeTodolistTitle({id, title});
         },
-        [todolist.id],
+        [id],
     );
     return (
         <h3>
-            <EditableSpan value={todolist.title} onChange={changeTodolistTitleHandler}/>
-            <IconButton onClick={removeTodolistHandler} disabled={todolist.entityStatus === "loading"}>
+            <EditableSpan value={title} onChange={changeTodolistTitleHandler}/>
+            <IconButton onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
                 <Delete/>
             </IconButton>
         </h3>

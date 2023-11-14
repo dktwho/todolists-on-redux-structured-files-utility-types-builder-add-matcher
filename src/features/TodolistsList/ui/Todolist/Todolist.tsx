@@ -13,6 +13,7 @@ type Props = {
     tasks: TaskType[];
 }
 
+/*TODO: fixed destructuring props and React.memo(function  */
 export const Todolist = React.memo(function (props: Props) {
     const {fetchTasks, addTask} = useActions(tasksThunks);
 
