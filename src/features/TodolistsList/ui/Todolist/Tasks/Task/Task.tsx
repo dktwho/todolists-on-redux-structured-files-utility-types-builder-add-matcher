@@ -4,17 +4,18 @@ import {Delete} from "@mui/icons-material";
 import {EditableSpan} from "common/components";
 import {TaskStatuses} from "common/enums";
 import {TaskType} from "features/TodolistsList/api/tasks/tasksApi.types";
-import {tasksThunks} from "../../../model/tasks/tasksSlice";
-import {useActions} from "../../../../../common/hooks";
+import {tasksThunks} from "features/TodolistsList/model/tasks/tasksSlice";
+import {useActions} from "../../../../../../common/hooks";
 
 import styles from './Task.module.css'
+
 
 type TaskProps = {
     task: TaskType;
     todolistId: string;
 };
 
-export const Task = React.memo(({task,todolistId} : TaskProps) => {
+export const Task = React.memo(({task, todolistId}: TaskProps) => {
     const {removeTask, updateTask} = useActions(tasksThunks)
     const removeTaskHandler = () => {
         removeTask({taskId: task.id, todolistId: todolistId});
@@ -26,7 +27,7 @@ export const Task = React.memo(({task,todolistId} : TaskProps) => {
     }
 
     const changeTaskTitleHandler = (title: string) => {
-        updateTask({ taskId: task.id, domainModel: { title }, todolistId: todolistId });
+        updateTask({taskId: task.id, domainModel: {title}, todolistId: todolistId});
     }
 
     return (

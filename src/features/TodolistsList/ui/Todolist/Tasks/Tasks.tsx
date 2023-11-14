@@ -1,5 +1,5 @@
 import React from 'react';
-import {Task} from "../Task/Task";
+import {Task} from "./Task/Task";
 import {TaskType} from "../../../api/tasks/tasksApi.types";
 import {TaskStatuses} from "../../../../../common/enums";
 import {TodolistDomainType} from "../../../model/todolists/todolistsSlice";
