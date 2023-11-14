@@ -1,10 +1,10 @@
 import {useActions} from "../../../common/hooks";
 import {authThunks} from "../model/auth.slice";
 import {FormikHelpers, useFormik} from "formik";
-import {LoginParamsType} from "../api/auth.api";
 import {BaseResponseType} from "../../../common/types";
 import {useSelector} from "react-redux";
 import {selectIsLoggedIn} from "../model/auth.selectors";
+import { LoginParamsType } from "../api/auth.types";
 
 
 // type
