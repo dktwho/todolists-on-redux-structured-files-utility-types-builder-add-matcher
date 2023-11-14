@@ -1,17 +1,16 @@
 import React, {useCallback, useEffect} from "react";
 import {Delete} from "@mui/icons-material";
 import { IconButton} from "@mui/material";
-import {Task} from "./Task/Task";
 import {
     TodolistDomainType,
      todolistsThunks
 } from "features/TodolistsList/model/todolists/todolistsSlice";
 import {tasksThunks} from "features/TodolistsList/model/tasks/tasksSlice";
-import {TaskStatuses} from "common/enums";
 import {useActions} from "common/hooks";
 import {AddItemForm, EditableSpan} from "common/components";
 import {TaskType} from "../../api/tasks/tasksApi.types";
 import {FilterTasksButton} from "./FilterTasksButton/FilterTasksButton";
+import {Tasks} from "./Tasks/Tasks";
 
 type Props = {
     todolist: TodolistDomainType;
@@ -45,17 +44,6 @@ export const Todolist = React.memo(function (props: Props) {
         [props.todolist.id],
     );
 
-
-
-    let tasksForTodolist = props.tasks;
-
-    if (props.todolist.filter === "active") {
-        tasksForTodolist = props.tasks.filter((t) => t.status === TaskStatuses.New);
-    }
-    if (props.todolist.filter === "completed") {
-        tasksForTodolist = props.tasks.filter((t) => t.status === TaskStatuses.Completed);
-    }
-
     return (
         <div>
             <h3>
@@ -65,15 +53,7 @@ export const Todolist = React.memo(function (props: Props) {
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTaskCallback} disabled={props.todolist.entityStatus === "loading"}/>
-            <div>
-                {tasksForTodolist.map((t) => (
-                    <Task
-                        key={t.id}
-                        task={t}
-                        todolistId={props.todolist.id}
-                    />
-                ))}
-            </div>
+            <Tasks todolist={props.todolist} tasks={props.tasks}  />
             <div style={{paddingTop: "10px"}}>
                 <FilterTasksButton todolist={props.todolist}/>
             </div>
