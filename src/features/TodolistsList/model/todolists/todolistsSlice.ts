@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RequestStatusType } from "app/appSlice";
-import { todolistsApi,  } from "features/TodolistsList/api/todolists/todolistsApi";
-import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils";
-import { ResultCode } from "common/enums";
-import { clearTasksAndTodolists } from "common/actions";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {RequestStatusType} from "app/appSlice";
+import {todolistsApi,} from "features/TodolistsList/api/todolists/todolistsApi";
+import {createAppAsyncThunk, handleServerAppError, thunkTryCatch} from "common/utils";
+import {ResultCode} from "common/enums";
+import {clearTasksAndTodolists} from "common/actions";
 import {TodolistType, UpdateTodolistTitleArgType} from "../../api/todolists/todolistsApi.types";
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
@@ -30,7 +30,9 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
 const removeTodolist = createAppAsyncThunk<{ id: string }, string>("todo/removeTodolist", async (id, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
     dispatch(todolistsActions.changeTodolistEntityStatus({ id, entityStatus: "loading" }));
-    const res = await todolistsApi.deleteTodolist(id);
+    const res = await todolistsApi.deleteTodolist(id).finally(() => {
+      dispatch(todolistsActions.changeTodolistEntityStatus({ id, entityStatus: "idle" }));
+    })
     if (res.data.resultCode === ResultCode.Success) {
       return { id };
     } else {
@@ -99,7 +101,7 @@ const slice = createSlice({
       })
       .addCase(clearTasksAndTodolists, () => {
         return [];
-      });
+      })
   },
 });
 
