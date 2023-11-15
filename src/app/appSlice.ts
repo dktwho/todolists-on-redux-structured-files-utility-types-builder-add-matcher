@@ -1,4 +1,14 @@
-import {AnyAction, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {
+    AnyAction,
+    createSlice,
+    isAnyOf,
+    isAsyncThunkAction,
+    isFulfilled,
+    isPending,
+    isRejected,
+    PayloadAction
+} from "@reduxjs/toolkit";
+import {authThunks} from "../features/auth/model/auth.slice";
 
 const initialState = {
     status: "idle" as RequestStatusType,
@@ -49,8 +59,9 @@ const slice = createSlice({
         builder.addMatcher(isRejected, (state, action: AnyAction) => {
             state.status = 'failed'
             if (action.payload) {
-                 if(action.type.includes('addTodolist')) return
-                 if(action.type.includes('addTask')) return
+                if (action.type.includes('addTodolist')) return
+                if (action.type.includes('addTask')) return
+                if (action.type.includes('initializeApp')) return
                 // TODO
                 // if(isAnyOf(todolistsThunks.addTodolist.rejected)) return;
                 state.error = action.payload.messages[0]
@@ -62,6 +73,18 @@ const slice = createSlice({
         builder.addMatcher(isFulfilled, (state, action) => {
             state.status = 'succeeded'
         })
+
+        builder.addMatcher(
+            isAnyOf(authThunks.initializeApp.fulfilled,  authThunks.initializeApp.rejected),
+            (state, action) => {
+                state.isInitialized = true
+            })
+
+        // builder.addMatcher(
+        //     isAnyOf(isAsyncThunkAction(authThunks.initializeApp)),
+        //     (state, action) => {
+        //         state.isInitialized = true
+        //     })
     }
 })
 

@@ -1,19 +1,18 @@
 import {createSlice, isAnyOf} from "@reduxjs/toolkit";
-import {appActions} from "app/appSlice";
 import {authAPI} from "features/auth/api/auth.api";
 import {clearTasksAndTodolists} from "common/actions";
-import {createAppAsyncThunk, handleServerAppError, handleServerNetworkError, thunkTryCatch} from "common/utils";
+import {createAppAsyncThunk, handleServerAppError, thunkTryCatch} from "common/utils";
 import {ResultCode} from "common/enums";
 import {LoginParamsType} from "../api/auth.types";
 
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>("auth/login", async (arg, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI;
-        const res = await authAPI.login(arg);
-        if (res.data.resultCode === ResultCode.Success) {
-            return {isLoggedIn: true};
-        } else {
-            return rejectWithValue(res.data);
-        }
+    const res = await authAPI.login(arg);
+    if (res.data.resultCode === ResultCode.Success) {
+        return {isLoggedIn: true};
+    } else {
+        return rejectWithValue(res.data);
+    }
 });
 
 const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("auth/logout", async (_, thunkAPI) => {
@@ -30,22 +29,16 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("auth/logout",
     });
 });
 
+
 const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>("auth/initializeApp", async (_, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI;
-    try {
-        const res = await authAPI.me();
-        if (res.data.resultCode === ResultCode.Success) {
-            return {isLoggedIn: true};
-        } else {
-            return rejectWithValue(null);
-        }
-    } catch (e) {
-        handleServerNetworkError(e, dispatch);
-        return rejectWithValue(null);
-    } finally {
-        dispatch(appActions.setAppInitialized({isInitialized: true}));
+    const res = await authAPI.me()
+    if (res.data.resultCode === 0) {
+        return {isLoggedIn: true}
+    } else {
+        return rejectWithValue((res.data))
     }
-});
+})
 
 const slice = createSlice({
     name: "auth",
@@ -59,7 +52,7 @@ const slice = createSlice({
                 isAnyOf(authThunks.login.fulfilled, authThunks.logout.fulfilled, authThunks.initializeApp.fulfilled),
                 (state, action) => {
                     state.isLoggedIn = action.payload.isLoggedIn;
-                });
+                })
     }
 });
 
