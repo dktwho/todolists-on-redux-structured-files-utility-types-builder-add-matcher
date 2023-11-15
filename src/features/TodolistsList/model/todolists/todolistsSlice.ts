@@ -8,11 +8,9 @@ import {TodolistType, UpdateTodolistTitleArgType} from "../../api/todolists/todo
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
   "todo/fetchTodolists",
-  async (_, thunkAPI) => {
-    return thunkTryCatch(thunkAPI, async () => {
+  async () => {
       const res = await todolistsApi.getTodolists();
       return { todolists: res.data };
-    });
   },
 );
 
