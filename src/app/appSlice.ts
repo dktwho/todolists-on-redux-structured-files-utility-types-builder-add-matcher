@@ -45,9 +45,11 @@ const slice = createSlice({
         builder.addMatcher(isPending, (state, action) => {
             state.status = 'loading'
         })
+
         builder.addMatcher(isRejected, (state, action: AnyAction) => {
             state.status = 'failed'
             if (action.payload) {
+                if(action.type.includes('addTodolist')) return
                 state.error = action.payload.messages[0]
             } else {
                 state.error = action.error.message ? action.error.message : 'Some error occurred'
