@@ -15,7 +15,7 @@ export const TodolistsList = () => {
     const tasks = useSelector(selectTasks);
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
-    const {addTodolist, fetchTodolists,} = useActions(todolistsThunks);
+    const {addTodolist, fetchTodolists} = useActions(todolistsThunks);
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -25,7 +25,7 @@ export const TodolistsList = () => {
     }, []);
 
     const addTodolistCallBack = useCallback((title: string) => {
-       return addTodolist(title);
+       return addTodolist(title).unwrap()
     }, []);
 
 
