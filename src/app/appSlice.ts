@@ -50,6 +50,7 @@ const slice = createSlice({
             state.status = 'failed'
             if (action.payload) {
                  if(action.type.includes('addTodolist')) return
+                 if(action.type.includes('addTask')) return
                 // TODO
                 // if(isAnyOf(todolistsThunks.addTodolist.rejected)) return;
                 state.error = action.payload.messages[0]
