@@ -16,9 +16,9 @@ import { Login } from "features/auth/ui/login/login";
 import { TodolistsList } from "features/TodolistsList/ui/TodolistsList";
 import { ErrorSnackbar } from "common/components";
 import { useActions } from "common/hooks";
-import { selectIsLoggedIn } from "features/auth/model/auth.selectors";
+import { selectIsLoggedIn } from "features/auth/model/authSelectors";
 import { selectAppStatus, selectIsInitialized } from "app/appSelectors";
-import { authThunks } from "features/auth/model/auth.slice";
+import { authThunks } from "features/auth/model/authSlice";
 
 function App() {
   const status = useSelector(selectAppStatus);

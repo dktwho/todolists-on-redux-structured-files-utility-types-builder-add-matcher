@@ -6,7 +6,7 @@ import {AddItemForm} from "common/components";
 import {Todolist} from "./Todolist/Todolist";
 import {Navigate} from "react-router-dom";
 import {useActions} from "common/hooks";
-import {selectIsLoggedIn} from "features/auth/model/auth.selectors";
+import {selectIsLoggedIn} from "features/auth/model/authSelectors";
 import {selectTasks} from "features/TodolistsList/model/tasks/tasksSelectors";
 import {selectTodolists} from "features/TodolistsList/model/todolists/todolistsSelectors";
 
