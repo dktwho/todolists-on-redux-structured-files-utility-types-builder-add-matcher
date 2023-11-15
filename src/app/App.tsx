@@ -1,62 +1,39 @@
 import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import { CircularProgress, Container,} from "@mui/material";
-import {Login} from "features/auth/ui/login/login";
-import {TodolistsList} from "features/TodolistsList/ui/TodolistsList";
+import {BrowserRouter} from "react-router-dom";
+import {CircularProgress,} from "@mui/material";
 import {ErrorSnackbar} from "common/components";
 import {useActions} from "common/hooks";
-import {selectAppStatus, selectIsInitialized} from "app/model/appSelectors";
+import {selectIsInitialized} from "app/model/appSelectors";
 import {authThunks} from "features/auth/model/authSlice";
-import { Header } from "./ui/Header/Header";
+import {Header} from "./ui/Header/Header";
+import {Routing} from "./ui/Routing/Routing";
 
 function App() {
+    const isInitialized = useSelector(selectIsInitialized);
+    const {initializeApp} = useActions(authThunks);
 
-  const isInitialized = useSelector(selectIsInitialized);
+    useEffect(() => {
+        initializeApp();
+    }, []);
 
-  const { initializeApp } = useActions(authThunks);
+    if (!isInitialized) {
+        return (
+            <div style={{position: "fixed", top: "30%", textAlign: "center", width: "100%"}}>
+                <CircularProgress/>
+            </div>
+        );
+    }
 
-  useEffect(() => {
-    initializeApp();
-  }, []);
-
-
-  if (!isInitialized) {
     return (
-      <div style={{ position: "fixed", top: "30%", textAlign: "center", width: "100%" }}>
-        <CircularProgress />
-      </div>
+        <BrowserRouter>
+            <div className="App">
+                <ErrorSnackbar/>
+                <Header/>
+                <Routing/>
+            </div>
+        </BrowserRouter>
     );
-  }
-
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <ErrorSnackbar />
-        <Header/>
-        {/*<AppBar position="static">*/}
-        {/*  <Toolbar>*/}
-        {/*    <IconButton edge="start" color="inherit" aria-label="menu">*/}
-        {/*      <Menu />*/}
-        {/*    </IconButton>*/}
-        {/*    <Typography variant="h6">News</Typography>*/}
-        {/*    {isLoggedIn && (*/}
-        {/*      <Button color="inherit" onClick={logoutHandler}>*/}
-        {/*        Log out*/}
-        {/*      </Button>*/}
-        {/*    )}*/}
-        {/*  </Toolbar>*/}
-        {/*  {status === "loading" && <LinearProgress />}*/}
-        {/*</AppBar>*/}
-        <Container fixed>
-          <Routes>
-            <Route path={"/"} element={<TodolistsList />} />
-            <Route path={"/login"} element={<Login />} />
-          </Routes>
-        </Container>
-      </div>
-    </BrowserRouter>
-  );
 }
 
 export default App;

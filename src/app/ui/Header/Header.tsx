@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {useActions} from "../../../common/hooks";
@@ -7,12 +7,7 @@ import {useSelector} from "react-redux";
 import {selectIsLoggedIn} from "../../../features/auth/model/authSelectors";
 import {selectAppStatus} from "../../model/appSelectors";
 
-// type Props = {
-//     position: string
-//     children: ReactNode
-// }
-//
-// {position}: Props
+
 export const Header = () => {
     const {logout} = useActions(authThunks);
     const status = useSelector(selectAppStatus);
