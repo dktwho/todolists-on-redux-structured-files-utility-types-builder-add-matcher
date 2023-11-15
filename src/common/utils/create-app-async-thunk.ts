@@ -10,3 +10,4 @@ export const createAppAsyncThunk = createAsyncThunk.withTypes<{
   dispatch: AppDispatch;
   rejectValue: null | BaseResponseType;
 }>();
+
