@@ -1,5 +1,5 @@
 import {AnyAction, createSlice, isAnyOf, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
-import {authThunks} from "../features/auth/model/authSlice";
+import {authThunks} from "../../features/auth/model/authSlice";
 
 const initialState = {
     status: "idle" as RequestStatusType,
