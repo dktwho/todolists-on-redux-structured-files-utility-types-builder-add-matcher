@@ -1,13 +1,4 @@
-import {
-    AnyAction,
-    createSlice,
-    isAnyOf,
-    isAsyncThunkAction,
-    isFulfilled,
-    isPending,
-    isRejected,
-    PayloadAction
-} from "@reduxjs/toolkit";
+import {AnyAction, createSlice, isAnyOf, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {authThunks} from "../features/auth/model/auth.slice";
 
 const initialState = {
