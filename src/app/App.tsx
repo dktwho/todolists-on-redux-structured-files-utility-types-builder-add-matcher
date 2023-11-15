@@ -1,16 +1,17 @@
 import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {AppBar, CircularProgress, Container,} from "@mui/material";
+import { CircularProgress, Container,} from "@mui/material";
 import {Login} from "features/auth/ui/login/login";
 import {TodolistsList} from "features/TodolistsList/ui/TodolistsList";
 import {ErrorSnackbar} from "common/components";
 import {useActions} from "common/hooks";
 import {selectAppStatus, selectIsInitialized} from "app/model/appSelectors";
 import {authThunks} from "features/auth/model/authSlice";
+import { Header } from "./ui/Header/Header";
 
 function App() {
-  const status = useSelector(selectAppStatus);
+
   const isInitialized = useSelector(selectIsInitialized);
 
   const { initializeApp } = useActions(authThunks);
@@ -32,7 +33,21 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <ErrorSnackbar />
-        <AppBar position={'static'}/>
+        <Header/>
+        {/*<AppBar position="static">*/}
+        {/*  <Toolbar>*/}
+        {/*    <IconButton edge="start" color="inherit" aria-label="menu">*/}
+        {/*      <Menu />*/}
+        {/*    </IconButton>*/}
+        {/*    <Typography variant="h6">News</Typography>*/}
+        {/*    {isLoggedIn && (*/}
+        {/*      <Button color="inherit" onClick={logoutHandler}>*/}
+        {/*        Log out*/}
+        {/*      </Button>*/}
+        {/*    )}*/}
+        {/*  </Toolbar>*/}
+        {/*  {status === "loading" && <LinearProgress />}*/}
+        {/*</AppBar>*/}
         <Container fixed>
           <Routes>
             <Route path={"/"} element={<TodolistsList />} />

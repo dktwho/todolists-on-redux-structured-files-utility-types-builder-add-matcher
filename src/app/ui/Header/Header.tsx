@@ -1,22 +1,26 @@
-import React, { ReactNode } from 'react';
-import {Button, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
+import React, {ReactNode} from 'react';
+import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {useActions} from "../../../common/hooks";
 import {authThunks} from "../../../features/auth/model/authSlice";
 import {useSelector} from "react-redux";
 import {selectIsLoggedIn} from "../../../features/auth/model/authSelectors";
+import {selectAppStatus} from "../../model/appSelectors";
 
-type Props = {
-    position: string
-    children: ReactNode
-}
-export const AppBar = ({position}: Props) => {
+// type Props = {
+//     position: string
+//     children: ReactNode
+// }
+//
+// {position}: Props
+export const Header = () => {
     const {logout} = useActions(authThunks);
+    const status = useSelector(selectAppStatus);
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
     const logoutHandler = () => logout();
     return (
-        <AppBar position={position}>
+        <AppBar position={'static'}>
             <Toolbar>
                 <IconButton edge="start" color="inherit" aria-label="menu">
                     <Menu/>
@@ -30,6 +34,7 @@ export const AppBar = ({position}: Props) => {
             </Toolbar>
             {status === "loading" && <LinearProgress/>}
         </AppBar>
+
     );
 };
 
